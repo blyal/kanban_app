@@ -15,6 +15,23 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript!');
 });
 
+app.get('/boards', (req: Request, res: Response) => {
+  res.send('Boards retrieved');
+});
+
+app.post('/boards', (req: Request, res: Response) => {
+  res.send('Board posted');
+});
+
+// or patch?
+app.put('/boards', (req: Request, res: Response) => {
+  res.send('Boards updated');
+});
+
+app.delete('/boards', (req: Request, res: Response) => {
+  res.send('Boards deleted');
+});
+
 // error handling
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack); // prints the stack trace to the console
