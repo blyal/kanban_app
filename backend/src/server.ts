@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
+import { connectDb, closeDb } from './db';
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -20,6 +21,29 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something went wrong');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// Connect to the database before starting the server
+connectDb()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Failed to establish a database connection', error);
+    process.exit(1);
+  });
+
+// Handle clean up on various signals
+process.on('SIGINT', closeDbAndExit);
+process.on('SIGTERM', closeDbAndExit);
+
+function closeDbAndExit() {
+  closeDb()
+    .then(() => {
+      process.exit();
+    })
+    .catch((error) => {
+      console.error('Failed to close the database connection', error);
+      process.exit(1);
+    });
+}
