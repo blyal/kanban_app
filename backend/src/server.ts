@@ -1,10 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { connectDb, closeDb } from './db';
 import { router as boardsRouter } from './routes/boards';
 
 const app = express();
 const port = process.env.PORT || 5001;
+
+// cors middleware
+app.use(cors());
 
 // logging middleware
 app.use(morgan('dev'));
