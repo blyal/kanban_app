@@ -18,8 +18,7 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
 
   return (
     <Drawer anchor='left' open={isSidebarOpen} onClose={closeSidebar}>
-      <List>
-        {/* Map through boards */}
+      <Box sx={{ maxHeight: '100vh', overflowY: 'auto' }}>
         {isLoading ? (
           <Box
             sx={{
@@ -28,33 +27,44 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
               justifyContent: 'center',
             }}
           >
-            <CircularProgress />
+            <CircularProgress color='primary' />
           </Box>
         ) : (
-          boards.map((board: Board) => {
-            return (
-              <ListItem key={board._id}>
-                <ListItemText primary={board.title} />
-              </ListItem>
-            );
-          })
+          <List>
+            {boards.map((board: Board) => {
+              return (
+                <ListItem key={board._id}>
+                  <Button
+                    component={Link}
+                    to={`/boards/${board._id}`}
+                    onClick={closeSidebar}
+                    variant='outlined'
+                    color='primary'
+                    fullWidth
+                  >
+                    {board.title}
+                  </Button>
+                </ListItem>
+              );
+            })}
+            <ListItem sx={{ paddingBottom: '2px' }}>
+              <Button color='secondary'>
+                <ListItemText primary='Add new board' />
+              </Button>
+            </ListItem>
+            <ListItem sx={{ paddingTop: '0px' }}>
+              <Button
+                color='primary'
+                component={Link}
+                to='/boards'
+                onClick={closeSidebar}
+              >
+                <ListItemText primary='See all boards' />
+              </Button>
+            </ListItem>
+          </List>
         )}
-        <ListItem>
-          <Button color='secondary'>
-            <ListItemText primary='Add new board' />
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            color='primary'
-            component={Link}
-            to='/boards'
-            onClick={closeSidebar}
-          >
-            <ListItemText primary='See all boards' />
-          </Button>
-        </ListItem>
-      </List>
+      </Box>
     </Drawer>
   );
 }
