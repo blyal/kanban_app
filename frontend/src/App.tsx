@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
-import { Navigation } from './Navigation';
+import { Navigation } from './navigation/Navigation';
 
 const theme = createTheme({
   palette: {
@@ -21,11 +21,13 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Navigation />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <div className='app'>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <Navigation />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 
