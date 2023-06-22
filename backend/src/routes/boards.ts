@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import Board, { IBoard } from '../models/board.model';
+import { generateSection } from '../services/section.service';
 
 const router = Router();
 
@@ -24,6 +25,10 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const savedBoard = await newBoard.save();
     res.send(savedBoard);
+    generateSection(savedBoard._id, 'Backlogs');
+    generateSection(savedBoard._id, 'Planned');
+    generateSection(savedBoard._id, 'In Progress');
+    generateSection(savedBoard._id, 'Completed');
   } catch (err: any) {
     console.error(err);
     res
