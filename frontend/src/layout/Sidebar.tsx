@@ -22,7 +22,14 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
         </ListItem>
         {/* End mapping */}
         <ListItem>
-          <ListItemText primary='Add new board' />
+          <Button color='secondary'>
+            <ListItemText primary='Add new board' />
+          </Button>
+        </ListItem>
+        <ListItem>
+          <Button color='primary'>
+            <ListItemText primary='See all boards' />
+          </Button>
         </ListItem>
       </List>
     </Drawer>
