@@ -18,7 +18,11 @@ function client<T>(
   endpoint: string,
   { data, apiUrl, method }: ClientParameters = {}
 ): AxiosPromise<T> {
-  const url = urlJoin(apiUrl || '', endpoint);
+  apiUrl = apiUrl ?? process.env.BACKEND_URL;
+  if (apiUrl === undefined) {
+    throw new Error('API URL is not defined.');
+  }
+  const url = urlJoin(apiUrl, endpoint);
   const params: AxiosRequestConfig = {
     method: method || HttpMethod.GET,
     url,
