@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import { config } from 'dotenv';
 
 config();
@@ -8,13 +8,10 @@ if (!uri) {
   throw new Error('MONGODB_URI is not defined in the .env file');
 }
 
-const client = new MongoClient(uri);
-
 export const connectDb = async () => {
   try {
-    await client.connect();
+    await mongoose.connect(uri);
     console.log('Connected successfully to MongoDB');
-    return client;
   } catch (err) {
     console.log(`Failed to connect to MongoDB: ${err}`);
     throw err;
@@ -23,7 +20,7 @@ export const connectDb = async () => {
 
 export const closeDb = async () => {
   try {
-    await client.close();
+    await mongoose.connection.close();
     console.log('MongoDB connection closed');
   } catch (err) {
     console.log(`Failed to close the MongoDB connection: ${err}`);
