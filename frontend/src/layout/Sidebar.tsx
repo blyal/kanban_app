@@ -28,7 +28,12 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
           </Button>
         </ListItem>
         <ListItem>
-          <Button color='primary' component={Link} to='/boards'>
+          <Button
+            color='primary'
+            component={Link}
+            to='/boards'
+            onClick={closeSidebar}
+          >
             <ListItemText primary='See all boards' />
           </Button>
         </ListItem>
