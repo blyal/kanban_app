@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { v4 as uuid } from 'uuid';
 import Board, { IBoard } from '../models/board.model';
 
 const router = Router();
@@ -16,6 +17,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
   const boardData: IBoard = req.body;
 
+  boardData._id = uuid();
   boardData.dateCreated = new Date();
   const newBoard = new Board(boardData);
 
