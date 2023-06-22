@@ -10,4 +10,16 @@ interface AddBoardData {
   description: string;
 }
 
-export type { Board, AddBoardData };
+interface Section {
+  _id: string;
+  title: string;
+  dateCreated: string;
+  boardId: string;
+}
+
+interface AddSectionData {
+  title: string;
+  boardId: string;
+}
+
+export type { Board, AddBoardData, Section, AddSectionData };
