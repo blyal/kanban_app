@@ -1,6 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, CircularProgress, Card, Typography, Grid } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Card,
+  Divider,
+  Typography,
+  Grid,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useBoardsContext } from '../context/boardsContext';
 import { Board } from '../types/types';
@@ -29,7 +36,7 @@ function Boards() {
       sx={{
         maxHeight: '100vh',
         overflow: 'auto',
-        margin: 3, // add margin around the container
+        margin: 3,
       }}
     >
       <Grid container spacing={3}>
@@ -47,13 +54,53 @@ function Boards() {
                     alignItems: 'center',
                     backgroundColor: theme.palette.primary.main,
                     borderRadius: 2,
+                    padding: 2,
+                    paddingLeft: 5,
+                    paddingRight: 5,
                   }}
                   elevation={10}
                 >
-                  <Typography variant='h5' color='white'>
-                    {board.title}
-                  </Typography>
-                  <Typography color='white'>{board.description}</Typography>
+                  <Box
+                    sx={{
+                      flex: '1',
+                      width: '100%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column-reverse',
+                    }}
+                  >
+                    <Divider
+                      sx={{
+                        bgcolor: 'white',
+                        height: '1px',
+                        my: 3,
+                      }}
+                    />
+                    <Typography variant='h5' color='white'>
+                      {board.title}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      flex: '1',
+                      width: '100%',
+                    }}
+                  >
+                    <Typography
+                      color='white'
+                      sx={{
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 4,
+                        WebkitBoxOrient: 'vertical',
+                        width: '100%',
+                        overflowWrap: 'break-word',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {board.description}
+                    </Typography>
+                  </Box>
                 </Card>
               </Link>
             </Grid>
