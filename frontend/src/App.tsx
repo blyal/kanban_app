@@ -8,6 +8,8 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#1976d2', // blue.A700
+      // light: '#add8e6', // light blue
+      light: '#87BFFF', // light blue
     },
     secondary: {
       main: '#4caf50', // green

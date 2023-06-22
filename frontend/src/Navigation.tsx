@@ -12,7 +12,7 @@ function Navigation() {
           <Routes>
             <Route path='/' element={<div>Default</div>} />
             <Route path='/boards' element={<Boards />} />
-            <Route path='/board/*' element={<div>Singular Board</div>} />
+            <Route path='/boards/*' element={<div>Singular Board</div>} />
             <Route path='/*' element={<div>404</div>} />
           </Routes>
         </Router>
