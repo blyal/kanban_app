@@ -45,13 +45,15 @@ function Boards() {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: theme.palette.primary.light,
+                    backgroundColor: theme.palette.primary.main,
                     borderRadius: 2,
                   }}
                   elevation={10}
                 >
-                  <Typography variant='h5'>{board.title}</Typography>
-                  <Typography>{board.description}</Typography>
+                  <Typography variant='h5' color='white'>
+                    {board.title}
+                  </Typography>
+                  <Typography color='white'>{board.description}</Typography>
                 </Card>
               </Link>
             </Grid>
