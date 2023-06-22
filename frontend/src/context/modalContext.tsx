@@ -13,7 +13,8 @@ enum ModalType {
 
 interface ModalContextApi {
   typeOfModalOpen: ModalType | null;
-  openModal: (modalType: ModalType | null) => void;
+  openModal: (modalType: ModalType) => void;
+  closeModal: () => void;
 }
 
 const ModalContext = React.createContext<ModalContextApi | undefined>(
@@ -28,12 +29,13 @@ interface ModalProviderProps {
 function ModalProvider({ children }: ModalProviderProps) {
   const [typeOfModalOpen, setTypeOfModalOpen] =
     React.useState<ModalType | null>(null);
-  const openModal = (modalType: ModalType | null) =>
-    setTypeOfModalOpen(modalType);
+  const openModal = (modalType: ModalType) => setTypeOfModalOpen(modalType);
+  const closeModal = () => setTypeOfModalOpen(null);
 
   const value: ModalContextApi = {
     typeOfModalOpen,
     openModal,
+    closeModal,
   };
 
   return (
