@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import Board from '../models/board.model';
+import Board, { IBoard } from '../models/board.model';
 
 const router = Router();
 
@@ -13,8 +13,21 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', (req: Request, res: Response) => {
-  res.send('Board posted');
+router.post('/', async (req: Request, res: Response) => {
+  const boardData: IBoard = req.body;
+
+  boardData.dateCreated = new Date();
+  const newBoard = new Board(boardData);
+
+  try {
+    const savedBoard = await newBoard.save();
+    res.send(savedBoard);
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ message: 'Something went wrong with adding a board' });
+  }
 });
 
 router.patch('/:id', (req: Request, res: Response) => {
