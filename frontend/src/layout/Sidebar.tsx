@@ -4,6 +4,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
+import { useBoardsContext } from '../context/boardsContext';
+import { Box, CircularProgress } from '@mui/material';
+import { Board } from '../types/types';
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -11,17 +14,31 @@ interface SidebarProps {
 }
 
 function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
+  const { boards, isLoading } = useBoardsContext();
+
   return (
     <Drawer anchor='left' open={isSidebarOpen} onClose={closeSidebar}>
       <List>
         {/* Map through boards */}
-        <ListItem>
-          <ListItemText primary='Board 1' />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary='Board 2' />
-        </ListItem>
-        {/* End mapping */}
+        {isLoading ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          boards.map((board: Board) => {
+            return (
+              <ListItem key={board._id}>
+                <ListItemText primary={board.title} />
+              </ListItem>
+            );
+          })
+        )}
         <ListItem>
           <Button color='secondary'>
             <ListItemText primary='Add new board' />
