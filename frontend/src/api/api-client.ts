@@ -18,7 +18,8 @@ function client<T>(
   endpoint: string,
   { data, apiUrl, method }: ClientParameters = {}
 ): AxiosPromise<T> {
-  apiUrl = apiUrl ?? process.env.BACKEND_URL;
+  apiUrl = apiUrl ?? process.env.REACT_APP_BACKEND_URL;
+  console.log(apiUrl);
   if (apiUrl === undefined) {
     throw new Error('API URL is not defined.');
   }
