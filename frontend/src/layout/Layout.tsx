@@ -20,7 +20,6 @@ function Layout() {
         isSidebarOpen={isSidebarOpen}
         closeSidebar={handleSidebarClose}
       />
-      {/* main content */}
     </div>
   );
 }
