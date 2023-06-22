@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Layout } from './layout/Layout';
 import './App.css';
+import { Navigation } from './Navigation';
 
 const theme = createTheme({
   palette: {
@@ -15,21 +15,15 @@ const theme = createTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Router>
-          <Layout />
-          <Routes>
-            <Route path='/' element={<div>Default</div>} />
-            <Route path='/boards' element={<div>Boards</div>} />
-            <Route path='/*' element={<div>404</div>} />
-          </Routes>
-        </Router>
-        {/* main content */}
-      </div>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Navigation />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
