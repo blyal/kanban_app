@@ -17,7 +17,10 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Layout />
+      <div>
+        <Layout />
+        {/* main content */}
+      </div>
     </ThemeProvider>
   );
 }
