@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -27,7 +28,7 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
           </Button>
         </ListItem>
         <ListItem>
-          <Button color='primary'>
+          <Button color='primary' component={Link} to='/boards'>
             <ListItemText primary='See all boards' />
           </Button>
         </ListItem>
