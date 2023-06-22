@@ -13,11 +13,7 @@ function ModalsWrapper() {
   if (typeOfModalOpen === ModalType.UPDATE_TASK) return <></>;
   if (typeOfModalOpen === ModalType.DELETE_TASK) return <></>;
 
-  return (
-    <Modal isOpen={true} title='Error'>
-      Something went wrong
-    </Modal>
-  );
+  return <Modal title='Error'>Something went wrong</Modal>;
 }
 
 export { ModalsWrapper };

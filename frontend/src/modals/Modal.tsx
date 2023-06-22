@@ -2,12 +2,11 @@ import React, { ReactNode } from 'react';
 import { useModalContext } from '../context/modalContext';
 
 interface ModalProps {
-  isOpen: boolean;
   title: string;
   children: ReactNode;
 }
 
-const Modal = ({ isOpen, title, children }: ModalProps) => {
+const Modal = ({ title, children }: ModalProps) => {
   const { closeModal } = useModalContext();
 
   const handleCloseModal = () => {
