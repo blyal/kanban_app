@@ -1,11 +1,24 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Layout } from './layout/Layout';
+import './App.css';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2', // blue.A700
+    },
+    secondary: {
+      main: '#ff4081', // pink.A400
+    },
+  },
+});
 
 function App() {
   return (
-    <Button variant='contained' color='primary'>
-      Hello World
-    </Button>
+    <ThemeProvider theme={theme}>
+      <Layout />
+    </ThemeProvider>
   );
 }
 
