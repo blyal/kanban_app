@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
 import { Navigation } from './navigation/Navigation';
+import { BoardsProvider } from './context/boardsContext';
+import { ModalProvider } from './context/modalContext';
 
 const theme = createTheme({
   palette: {
@@ -24,7 +26,11 @@ function App() {
     <div className='app'>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <Navigation />
+          <BoardsProvider>
+            <ModalProvider>
+              <Navigation />
+            </ModalProvider>
+          </BoardsProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </div>

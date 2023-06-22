@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 
 enum ModalType {
-  ADD_BOARD,
-  DELETE_BOARD,
-  ADD_SECTION,
-  UPDATE_SECTION,
-  DELETE_SECTION,
-  ADD_TASK,
-  UPDATE_TASK,
-  DELETE_TASK,
+  ADD_BOARD = 'ADD_BOARD',
+  DELETE_BOARD = 'DELETE_BOARD',
+  ADD_SECTION = 'ADD_SECTION',
+  UPDATE_SECTION = 'UPDATE_SECTION',
+  DELETE_SECTION = 'DELETE_SECTION',
+  ADD_TASK = 'ADD_TASK',
+  UPDATE_TASK = 'UPDATE_TASK',
+  DELETE_TASK = 'DELETE_TASK',
 }
 
 interface ModalContextApi {
@@ -51,4 +51,4 @@ function useModalContext() {
   return context;
 }
 
-export { ModalProvider, useModalContext };
+export { ModalProvider, useModalContext, ModalType };

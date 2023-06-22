@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { useBoardsContext } from '../context/boardsContext';
 import { Box, CircularProgress } from '@mui/material';
 import { Board } from '../types/types';
+import { useModalContext, ModalType } from '../context/modalContext';
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -15,6 +16,12 @@ interface SidebarProps {
 
 function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
   const { boards, isLoading } = useBoardsContext();
+  const { openModal } = useModalContext();
+
+  const handleClickAddNewBoard = () => {
+    closeSidebar();
+    openModal(ModalType.ADD_BOARD);
+  };
 
   return (
     <Drawer anchor='left' open={isSidebarOpen} onClose={closeSidebar}>
@@ -48,7 +55,7 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
               );
             })}
             <ListItem sx={{ paddingBottom: '2px' }}>
-              <Button color='secondary'>
+              <Button color='secondary' onClick={handleClickAddNewBoard}>
                 <ListItemText primary='Add new board' />
               </Button>
             </ListItem>
