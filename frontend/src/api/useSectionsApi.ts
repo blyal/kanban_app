@@ -4,7 +4,7 @@ import { Section, AddSectionData } from '../types/types';
 
 const SECTIONS_URL = 'sections';
 
-function useGetSectionsByBoard(boardId: string) {
+function useGetSectionsByBoard(boardId: string | undefined) {
   const result = useQuery('sections', () =>
     client<Section[]>(SECTIONS_URL, {
       data: {
