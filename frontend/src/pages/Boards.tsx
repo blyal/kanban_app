@@ -38,6 +38,7 @@ function Boards() {
             <Grid item xs={12} sm={6} md={3} key={board._id}>
               <Link to={`${board._id}`} style={{ textDecoration: 'none' }}>
                 <Card
+                  className='board-card'
                   sx={{
                     height: 250,
                     display: 'flex',
@@ -45,10 +46,9 @@ function Boards() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: theme.palette.primary.light,
-                    // boxShadow: '0 3px 5px 2px rgba(125, 123, 135, 0.3)',
                     borderRadius: 2,
                   }}
-                  elevation={4}
+                  elevation={10}
                 >
                   <Typography variant='h5'>{board.title}</Typography>
                   <Typography>{board.description}</Typography>
