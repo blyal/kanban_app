@@ -5,4 +5,9 @@ interface Board {
   dateCreated: string;
 }
 
-export type { Board };
+interface AddBoardData {
+  title: string;
+  description: string;
+}
+
+export type { Board, AddBoardData };

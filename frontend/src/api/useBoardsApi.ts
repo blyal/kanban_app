@@ -1,6 +1,6 @@
-import { useQuery } from 'react-query';
-import { client } from './api-client';
-import { Board } from '../types/types';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { HttpMethod, client } from './api-client';
+import { Board, AddBoardData } from '../types/types';
 
 const BOARDS_URL = 'boards';
 
@@ -9,4 +9,20 @@ function useGetBoards() {
   return { ...result, boards: result.data?.data ?? [] };
 }
 
-export { useGetBoards };
+function useAddBoard() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: AddBoardData) =>
+      client(`${BOARDS_URL}`, {
+        method: HttpMethod.POST,
+        data,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('boards');
+      },
+    }
+  );
+}
+
+export { useGetBoards, useAddBoard };

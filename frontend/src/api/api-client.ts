@@ -32,4 +32,4 @@ function client<T>(
   return axios(params);
 }
 
-export { client };
+export { client, HttpMethod };
