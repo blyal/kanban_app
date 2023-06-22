@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { connectDb, closeDb } from './db';
 import { router as boardsRouter } from './routes/boards';
+import { router as sectionsRouter } from './routes/sections';
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -21,6 +22,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/boards', boardsRouter);
+app.use('/sections', sectionsRouter);
 
 app.use((req: Request, res: Response) => {
   res.status(404).send({ message: 'Route not found' });
