@@ -138,6 +138,7 @@ function UpdateOrDeleteBoardModal({ boardId }: UpdateOrDeleteBoardModalProps) {
             color='warning'
             fullWidth
             onClick={() => toggleIsConsideringBoardDeletion(true)}
+            disabled={boards.length <= 1}
           >
             Delete Board
           </Button>

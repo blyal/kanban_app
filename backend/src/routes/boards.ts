@@ -62,6 +62,15 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
+    const totalBoards = await Board.countDocuments();
+    if (totalBoards <= 1) {
+      return res
+        .status(400)
+        .send({
+          message: 'Deletion not allowed. At least one board should exist.',
+        });
+    }
+
     // Delete all tasks associated with this board
     await Task.deleteMany({ boardId: id });
 
