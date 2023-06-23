@@ -38,8 +38,19 @@ router.patch('/:id', (req: Request, res: Response) => {
   res.send(`Task ${req.params.id} updated`);
 });
 
-router.delete('/:id', (req: Request, res: Response) => {
-  res.send(`Task ${req.params.id} deleted`);
+router.delete('/:id', async (req: Request, res: Response) => {
+  try {
+    const deletedTask = await Task.findByIdAndRemove(req.params.id);
+    if (!deletedTask) {
+      return res.status(404).send({ message: 'Task not found' });
+    }
+    res.send({ message: `Task ${req.params.id} deleted` });
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ message: 'Something went wrong with deleting the task' });
+  }
 });
 
 export { router };

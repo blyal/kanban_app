@@ -18,10 +18,6 @@ app.use(morgan('dev'));
 // body parsing middleware
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript!');
-});
-
 app.use('/boards', boardsRouter);
 app.use('/sections', sectionsRouter);
 app.use('/tasks', tasksRouter);
