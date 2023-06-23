@@ -7,13 +7,15 @@ interface SectionProps {
   section: ISection;
   sectionTasks: ITask[];
   handleAddTask: (sectionId: string) => void;
-  handleDeleteTask: (taskId: string) => void;
+  handleEditTask: (task: ITask) => void;
+  handleDeleteTask: (task: ITask) => void;
 }
 
 function Section({
   section,
   sectionTasks: tasks,
   handleAddTask,
+  handleEditTask,
   handleDeleteTask,
 }: SectionProps) {
   const theme = useTheme();
@@ -43,6 +45,7 @@ function Section({
             <Task
               key={task._id}
               task={task}
+              handleEditTask={handleEditTask}
               handleDeleteTask={handleDeleteTask}
             />
           ))}

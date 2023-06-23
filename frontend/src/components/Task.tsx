@@ -4,10 +4,11 @@ import { Task as ITask } from '../types/types';
 
 interface TaskProps {
   task: ITask;
-  handleDeleteTask: (taskId: string) => void;
+  handleEditTask: (task: ITask) => void;
+  handleDeleteTask: (task: ITask) => void;
 }
 
-function Task({ task, handleDeleteTask }: TaskProps) {
+function Task({ task, handleEditTask, handleDeleteTask }: TaskProps) {
   const theme = useTheme();
 
   return (
@@ -28,8 +29,11 @@ function Task({ task, handleDeleteTask }: TaskProps) {
           backgroundColor: theme.palette.primary.main,
           textTransform: 'none',
           position: 'relative',
+          '&:hover .delete-task-button': {
+            opacity: 1,
+          },
         }}
-        onClick={() => console.log('click edit')}
+        onClick={() => handleEditTask(task)}
       >
         <Typography
           variant='body1'
@@ -43,14 +47,16 @@ function Task({ task, handleDeleteTask }: TaskProps) {
           // sx={{ ml: 1 }} // You can adjust the margin to your needs
           onClick={(event) => {
             event.stopPropagation();
-            handleDeleteTask(task._id);
+            handleDeleteTask(task);
           }} // replace with your delete function
+          className='delete-task-button'
           sx={{
             position: 'absolute',
             mr: 1,
             right: 0,
             top: '50%',
             transform: 'translateY(-50%)',
+            opacity: 0,
           }}
         >
           <CloseIcon
@@ -59,6 +65,10 @@ function Task({ task, handleDeleteTask }: TaskProps) {
               right: 0,
               top: '50%',
               transform: 'translateY(-50%)',
+              color: 'grey',
+              '&:hover': {
+                color: 'black',
+              },
             }}
           />
         </Box>
