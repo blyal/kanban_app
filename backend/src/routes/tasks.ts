@@ -34,8 +34,27 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-router.patch('/:id', (req: Request, res: Response) => {
-  res.send(`Task ${req.params.id} updated`);
+router.patch('/:id', async (req: Request, res: Response) => {
+  const { title, sectionId } = req.body;
+
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      { title, sectionId },
+      { new: true }
+    );
+
+    if (updatedTask) {
+      res.send(updatedTask);
+    } else {
+      res.status(404).send({ message: 'Task not found' });
+    }
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ message: 'Something went wrong with updating the task' });
+  }
 });
 
 router.delete('/:id', async (req: Request, res: Response) => {
