@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { HttpMethod, client } from './api-client';
-import { Section, AddSectionData } from '../types/types';
+import { Section, AddSectionData, PatchSectionData } from '../types/types';
 
 const SECTIONS_URL = 'sections';
 
@@ -31,4 +31,40 @@ function useAddSectionToBoard() {
   );
 }
 
-export { useGetSectionsByBoard, useAddSectionToBoard };
+function usePatchSection() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ title, sectionId }: PatchSectionData) =>
+      client(`${SECTIONS_URL}/${sectionId}`, {
+        method: HttpMethod.PATCH,
+        data: { title },
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('sections');
+      },
+    }
+  );
+}
+
+function useDeleteSection() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (sectionId: string) =>
+      client(`${SECTIONS_URL}/${sectionId}`, {
+        method: HttpMethod.DELETE,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('sections');
+      },
+    }
+  );
+}
+
+export {
+  useGetSectionsByBoard,
+  useAddSectionToBoard,
+  usePatchSection,
+  useDeleteSection,
+};
