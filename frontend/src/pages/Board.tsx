@@ -7,13 +7,27 @@ import { Section } from '../components/Section';
 import { useModalContext } from '../context/modalContext';
 import { ModalsWrapper } from '../modals/ModalsWrapper';
 import { AddSectionButton } from '../components/AddSectionButton';
+import { useGetTasksByBoard } from '../api/useTasksApi';
 
 function Board() {
   const { boardId } = useParams();
-  const { sections, isLoading, isError } = useGetSectionsByBoard(boardId);
+  const {
+    sections,
+    isLoading: areSectionsLoading,
+    isError: isGetSectionsError,
+  } = useGetSectionsByBoard(boardId);
+  const {
+    tasks,
+    isLoading: areTasksLoading,
+    isError: isGetTasksError,
+  } = useGetTasksByBoard(boardId);
   const { typeOfModalOpen } = useModalContext();
 
-  if (isLoading)
+  if (isGetSectionsError || isGetTasksError) {
+    return <ErrorPage />;
+  }
+
+  if (areSectionsLoading || areTasksLoading)
     return (
       <div>
         <Box
@@ -29,10 +43,6 @@ function Board() {
       </div>
     );
 
-  if (isError) {
-    return <ErrorPage />;
-  }
-
   return (
     <>
       {Boolean(typeOfModalOpen) && <ModalsWrapper />}
@@ -46,9 +56,18 @@ function Board() {
           alignItems: 'start',
         }}
       >
-        {sections.map((section: ISection) => (
-          <Section key={section._id} section={section} />
-        ))}
+        {sections.map((section: ISection) => {
+          const sectionTasks = tasks.filter(
+            (task) => task.sectionId === section._id
+          );
+          return (
+            <Section
+              key={section._id}
+              section={section}
+              sectionTasks={sectionTasks}
+            />
+          );
+        })}
         <AddSectionButton />
       </Box>
     </>

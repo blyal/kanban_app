@@ -1,13 +1,17 @@
-import { Box, Paper, Typography, List, useTheme } from '@mui/material';
-import { Section as ISection } from '../types/types';
+import { Box, Button, Paper, Typography, List, useTheme } from '@mui/material';
+import { Section as ISection, Task as ITask } from '../types/types';
+import { useModalContext, ModalType } from '../context/modalContext';
+import { Task } from './Task';
 
 interface SectionProps {
   section: ISection;
+  sectionTasks: ITask[];
 }
 
-function Section({ section }: SectionProps) {
+function Section({ section, sectionTasks: tasks }: SectionProps) {
   const theme = useTheme();
-  console.log(theme.palette.primary.light);
+  const { openModal } = useModalContext();
+
   return (
     <Box
       sx={{
@@ -27,10 +31,20 @@ function Section({ section }: SectionProps) {
       >
         <Typography variant='h6'>{section.title}</Typography>
         <List>
-          {/* {section.tasks.map(task => (
-              <Task key={task.id} task={task} />
-            ))} */}
-          <div>Hello</div>
+          {tasks.map((task) => (
+            <Task key={task._id} task={task} />
+          ))}
+          <Button
+            variant='outlined'
+            onClick={() => openModal(ModalType.ADD_TASK)}
+            sx={{
+              mt: 2, // margin top
+              mb: 2, // margin bottom
+              borderRadius: 2,
+            }}
+          >
+            <Typography variant='body1'>+ Add Task</Typography>
+          </Button>
         </List>
       </Paper>
     </Box>
