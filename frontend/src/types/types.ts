@@ -5,7 +5,7 @@ interface Board {
   dateCreated: string;
 }
 
-interface AddBoardData {
+interface ApiBoardData {
   title: string;
   description: string;
 }
@@ -43,7 +43,7 @@ interface ApiTaskData {
 
 export type {
   Board,
-  AddBoardData,
+  ApiBoardData,
   Section,
   AddSectionData,
   PatchSectionData,

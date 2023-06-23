@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { HttpMethod, client } from './api-client';
-import { Board, AddBoardData } from '../types/types';
+import { Board, ApiBoardData } from '../types/types';
 
 const BOARDS_URL = 'boards';
 
@@ -12,7 +12,7 @@ function useGetBoards() {
 function useAddBoard() {
   const queryClient = useQueryClient();
   return useMutation(
-    (data: AddBoardData) =>
+    (data: ApiBoardData) =>
       client(`${BOARDS_URL}`, {
         method: HttpMethod.POST,
         data,
@@ -25,4 +25,35 @@ function useAddBoard() {
   );
 }
 
-export { useGetBoards, useAddBoard };
+function usePatchBoard() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ boardId, data }: { boardId: string; data: ApiBoardData }) =>
+      client(`${BOARDS_URL}/${boardId}`, {
+        method: HttpMethod.PATCH,
+        data,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('boards');
+      },
+    }
+  );
+}
+
+function useDeleteBoard() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (boardId: string) =>
+      client(`${BOARDS_URL}/${boardId}`, {
+        method: HttpMethod.DELETE,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('boards');
+      },
+    }
+  );
+}
+
+export { useGetBoards, useAddBoard, usePatchBoard, useDeleteBoard };
