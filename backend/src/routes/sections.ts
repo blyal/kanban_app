@@ -80,4 +80,52 @@ router.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.patch('/reorder/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { newOrder } = req.body;
+
+    const sectionToReorder = await Section.findById(id);
+    if (!sectionToReorder) {
+      return res.status(404).send({ message: 'Section not found' });
+    }
+
+    const currentOrder = sectionToReorder.order;
+    const currentBoardId = sectionToReorder.boardId;
+
+    // If the order has decreased, increment the order of all sections that are now after the current section
+    if (newOrder < currentOrder) {
+      await Section.updateMany(
+        {
+          order: { $gte: newOrder, $lt: currentOrder },
+          boardId: currentBoardId,
+        },
+        { $inc: { order: 1 } }
+      );
+    }
+
+    // If the order has increased, decrement the order of all sections that are now before the current section
+    else if (newOrder > currentOrder) {
+      await Section.updateMany(
+        {
+          order: { $gt: currentOrder, $lte: newOrder },
+          boardId: currentBoardId,
+        },
+        { $inc: { order: -1 } }
+      );
+    }
+
+    // Update the order of the current section
+    sectionToReorder.order = newOrder;
+    await sectionToReorder.save();
+
+    res.send({ message: 'Section reordered successfully' });
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ message: 'Something went wrong with reordering the section' });
+  }
+});
+
 export { router };
