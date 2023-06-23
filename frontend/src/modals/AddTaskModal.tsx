@@ -43,13 +43,15 @@ function AddTaskModal({ boardId, sectionId }: AddTaskModalProps) {
       ) : (
         <form onSubmit={handleSubmit}>
           <TextField
-            label='Title'
+            label='Task'
             variant='outlined'
             value={title}
+            multiline
+            rows={4}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             margin='normal'
-            inputProps={{ maxLength: 12 }}
+            inputProps={{ maxLength: 1000 }}
           />
           <Button type='submit' variant='contained' color='primary' fullWidth>
             Create
