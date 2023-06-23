@@ -22,6 +22,11 @@ interface AddSectionData {
   boardId: string;
 }
 
+interface PatchSectionData {
+  title: string;
+  sectionId: string;
+}
+
 interface Task {
   _id: string;
   title: string;
@@ -36,4 +41,12 @@ interface ApiTaskData {
   sectionId: string;
 }
 
-export type { Board, AddBoardData, Section, AddSectionData, Task, ApiTaskData };
+export type {
+  Board,
+  AddBoardData,
+  Section,
+  AddSectionData,
+  PatchSectionData,
+  Task,
+  ApiTaskData,
+};

@@ -1,15 +1,16 @@
 import { Button, Typography } from '@mui/material';
+import { Section } from '../types/types';
 
 interface AddTaskButtonProps {
-  sectionId: string;
-  handleAddTask: (sectionId: string) => void;
+  section: Section;
+  handleAddTask: (section: Section) => void;
 }
 
-function AddTaskButton({ sectionId, handleAddTask }: AddTaskButtonProps) {
+function AddTaskButton({ section, handleAddTask }: AddTaskButtonProps) {
   return (
     <Button
       variant='outlined'
-      onClick={() => handleAddTask(sectionId)}
+      onClick={() => handleAddTask(section)}
       sx={{
         mt: 0.5, // margin top
         mb: 0.5, // margin bottom

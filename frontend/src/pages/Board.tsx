@@ -12,9 +12,8 @@ import { useGetTasksByBoard } from '../api/useTasksApi';
 
 function Board() {
   const { boardId } = useParams();
-  const [sectionIdForAddingTask, setSectionIdForAddingTask] = React.useState<
-    string | null
-  >(null);
+  const [sectionForAction, setSectionForAction] =
+    React.useState<ISection | null>(null);
   const [taskForAction, setTaskForAction] = React.useState<ITask | null>(null);
   const {
     sections,
@@ -28,8 +27,13 @@ function Board() {
   } = useGetTasksByBoard(boardId);
   const { typeOfModalOpen, openModal } = useModalContext();
 
-  const handleAddTask = (sectionId: string) => {
-    setSectionIdForAddingTask(sectionId);
+  const handleClickSectionTitle = (section: ISection) => {
+    setSectionForAction(section);
+    openModal(ModalType.UPDATE_OR_DELETE_SECTION);
+  };
+
+  const handleAddTask = (section: ISection) => {
+    setSectionForAction(section);
     openModal(ModalType.ADD_TASK);
   };
 
@@ -45,7 +49,7 @@ function Board() {
 
   React.useEffect(() => {
     if (!Boolean(typeOfModalOpen)) {
-      setSectionIdForAddingTask(null);
+      setSectionForAction(null);
       setTaskForAction(null);
     }
   }, [typeOfModalOpen]);
@@ -74,7 +78,7 @@ function Board() {
     <>
       {Boolean(typeOfModalOpen) && (
         <ModalsWrapper
-          sectionIdForAction={sectionIdForAddingTask}
+          sectionForAction={sectionForAction}
           taskForAction={taskForAction}
         />
       )}
@@ -101,6 +105,7 @@ function Board() {
                 key={section._id}
                 section={section}
                 sectionTasks={sectionTasks}
+                handleClickTitle={handleClickSectionTitle}
                 handleAddTask={handleAddTask}
                 handleEditTask={handleEditTask}
                 handleDeleteTask={handleDeleteTask}

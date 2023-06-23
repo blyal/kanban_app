@@ -6,7 +6,8 @@ import { AddTaskButton } from './AddTaskButton';
 interface SectionProps {
   section: ISection;
   sectionTasks: ITask[];
-  handleAddTask: (sectionId: string) => void;
+  handleClickTitle: (section: ISection) => void;
+  handleAddTask: (section: ISection) => void;
   handleEditTask: (task: ITask) => void;
   handleDeleteTask: (task: ITask) => void;
 }
@@ -14,6 +15,7 @@ interface SectionProps {
 function Section({
   section,
   sectionTasks: tasks,
+  handleClickTitle,
   handleAddTask,
   handleEditTask,
   handleDeleteTask,
@@ -39,7 +41,13 @@ function Section({
         }}
         className='section'
       >
-        <Typography variant='h6'>{section.title}</Typography>
+        <Typography
+          variant='h6'
+          onClick={() => handleClickTitle(section)}
+          sx={{ cursor: 'pointer' }}
+        >
+          {section.title}
+        </Typography>
         <List>
           {tasks.map((task) => (
             <Task
@@ -49,10 +57,7 @@ function Section({
               handleDeleteTask={handleDeleteTask}
             />
           ))}
-          <AddTaskButton
-            sectionId={section._id}
-            handleAddTask={handleAddTask}
-          />
+          <AddTaskButton section={section} handleAddTask={handleAddTask} />
         </List>
       </Paper>
     </Box>

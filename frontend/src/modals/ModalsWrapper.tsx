@@ -3,18 +3,19 @@ import { useModalContext, ModalType } from '../context/modalContext';
 import { AddBoardModal } from './AddBoardModal';
 import { AddSectionModal } from './AddSectionModal';
 import { Modal } from './Modal';
+import { UpdateOrDeleteSectionModal } from './UpdateOrDeleteSectionModal';
 import { AddTaskModal } from './AddTaskModal';
 import { DeleteTaskModal } from './DeleteTaskModal';
 import { UpdateTaskModal } from './UpdateTaskModal';
-import { Task } from '../types/types';
+import { Section, Task } from '../types/types';
 
 interface ModalsWrapperProps {
-  sectionIdForAction?: string | null;
+  sectionForAction?: Section | null;
   taskForAction?: Task | null;
 }
 
 function ModalsWrapper({
-  sectionIdForAction,
+  sectionForAction,
   taskForAction,
 }: ModalsWrapperProps = {}) {
   const { typeOfModalOpen } = useModalContext();
@@ -24,14 +25,17 @@ function ModalsWrapper({
   if (typeOfModalOpen === ModalType.DELETE_BOARD) return <></>;
   if (typeOfModalOpen === ModalType.ADD_SECTION && boardId !== undefined)
     return <AddSectionModal boardId={boardId} />;
-  if (typeOfModalOpen === ModalType.UPDATE_SECTION) return <></>;
-  if (typeOfModalOpen === ModalType.DELETE_SECTION) return <></>;
+  if (
+    typeOfModalOpen === ModalType.UPDATE_OR_DELETE_SECTION &&
+    sectionForAction
+  )
+    return <UpdateOrDeleteSectionModal section={sectionForAction} />;
   if (
     typeOfModalOpen === ModalType.ADD_TASK &&
     boardId !== undefined &&
-    typeof sectionIdForAction === 'string'
+    sectionForAction
   )
-    return <AddTaskModal boardId={boardId} sectionId={sectionIdForAction} />;
+    return <AddTaskModal boardId={boardId} sectionId={sectionForAction._id} />;
   if (typeOfModalOpen === ModalType.UPDATE_TASK && taskForAction)
     return <UpdateTaskModal task={taskForAction} />;
   if (typeOfModalOpen === ModalType.DELETE_TASK && taskForAction)

@@ -48,7 +48,7 @@ function DeleteTaskModal({ taskId }: DeleteTaskModalProps) {
           <Typography>Are you sure you want to delete this task?</Typography>
           <br />
           <Button
-            type='submit'
+            // type='submit'
             variant='contained'
             color='primary'
             fullWidth
