@@ -27,10 +27,10 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const savedBoard = await newBoard.save();
     res.send(savedBoard);
-    await generateSection(savedBoard._id, 'Backlogs');
-    await generateSection(savedBoard._id, 'Planned');
-    await generateSection(savedBoard._id, 'In Progress');
-    await generateSection(savedBoard._id, 'Completed');
+    await generateSection(savedBoard._id, 'Backlogs', 0);
+    await generateSection(savedBoard._id, 'Planned', 1);
+    await generateSection(savedBoard._id, 'In Progress', 2);
+    await generateSection(savedBoard._id, 'Completed', 3);
   } catch (err: any) {
     console.error(err);
     res
@@ -64,11 +64,9 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
     const totalBoards = await Board.countDocuments();
     if (totalBoards <= 1) {
-      return res
-        .status(400)
-        .send({
-          message: 'Deletion not allowed. At least one board should exist.',
-        });
+      return res.status(400).send({
+        message: 'Deletion not allowed. At least one board should exist.',
+      });
     }
 
     // Delete all tasks associated with this board

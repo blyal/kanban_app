@@ -3,13 +3,15 @@ import { v4 as uuid } from 'uuid';
 
 export const generateSection = async (
   boardId: string,
-  title: string
+  title: string,
+  order: number
 ): Promise<void> => {
   const newSection: ISection = new Section({
     _id: uuid(),
     title: title,
     dateCreated: new Date(),
     boardId: boardId,
+    order: order,
   });
 
   try {

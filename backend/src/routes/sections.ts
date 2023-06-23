@@ -19,6 +19,10 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   const sectionData: ISection = req.body;
+  const { boardId } = sectionData;
+
+  const existingSectionsCount = await Section.countDocuments({ boardId });
+  sectionData.order = existingSectionsCount;
 
   sectionData._id = uuid();
   sectionData.dateCreated = new Date();

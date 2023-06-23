@@ -5,6 +5,7 @@ export interface ISection extends Document {
   title: string;
   dateCreated: Date;
   boardId: string;
+  order: number;
 }
 
 const SectionSchema: Schema = new Schema({
@@ -12,6 +13,7 @@ const SectionSchema: Schema = new Schema({
   title: { type: String, required: true },
   dateCreated: { type: String, required: true },
   boardId: { type: String, required: true },
+  order: { type: Number, required: true },
 });
 
 export default mongoose.model<ISection>('Section', SectionSchema);
