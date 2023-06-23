@@ -16,7 +16,7 @@ interface ClientParameters extends AxiosRequestConfig {
 
 function client<T>(
   endpoint: string,
-  { data, apiUrl, method }: ClientParameters = {}
+  { data, apiUrl, method, params }: ClientParameters = {}
 ): AxiosPromise<T> {
   apiUrl = apiUrl ?? process.env.REACT_APP_BACKEND_URL;
   console.log(apiUrl);
@@ -24,12 +24,13 @@ function client<T>(
     throw new Error('API URL is not defined.');
   }
   const url = urlJoin(apiUrl, endpoint);
-  const params: AxiosRequestConfig = {
+  const axiosParams: AxiosRequestConfig = {
     method: method || HttpMethod.GET,
     url,
     data,
+    params,
   };
-  return axios(params);
+  return axios(axiosParams);
 }
 
 export { client, HttpMethod };

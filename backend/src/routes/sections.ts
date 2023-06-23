@@ -1,14 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import Section, { ISection } from '../models/section.model';
-import { generateSection } from '../services/section.service';
 
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const sections = await Section.find();
-    res.send(sections);
+    const { boardId } = req.query;
+    console.log(boardId);
+    const sectionsByBoard = await Section.find({ boardId });
+    res.send(sectionsByBoard);
   } catch (err: any) {
     console.error(err);
     res.status(500).send({ message: 'Something went wrong' });
