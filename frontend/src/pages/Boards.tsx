@@ -29,7 +29,7 @@ function Boards() {
             justifyContent: 'center',
           }}
         >
-          <CircularProgress size={100} color='primary' />
+          <CircularProgress size={100} color='secondary' />
         </Box>
       </div>
     );
@@ -57,7 +57,7 @@ function Boards() {
                       flexDirection: 'column',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      backgroundColor: theme.palette.primary.main,
+                      backgroundColor: theme.palette.primary.light,
                       borderRadius: 2,
                       padding: 2,
                       paddingLeft: 5,

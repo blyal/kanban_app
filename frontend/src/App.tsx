@@ -10,13 +10,17 @@ const theme = createTheme({
   palette: {
     primary: {
       main: 'rgb(0, 0, 0)',
-      light: 'rgba(0, 0, 0, 0.5',
+      light: 'rgba(0, 0, 0, 0.5)',
       // main: '#1976d2', // blue.A700
       // light: '#87BFFF', // light blue
     },
     secondary: {
       // main: '#4caf50', // green
-      main: '#000000',
+      main: 'rgb(255, 255, 255)',
+      light: 'rgb(245, 245, 220)',
+    },
+    warning: {
+      main: 'rgb(255, 51, 51)',
     },
   },
 });

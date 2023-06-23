@@ -35,7 +35,7 @@ function Section({
     >
       <Paper
         sx={{
-          backgroundColor: theme.palette.primary.light,
+          backgroundColor: theme.palette.secondary.light,
           padding: 3,
           paddingBottom: 0,
         }}

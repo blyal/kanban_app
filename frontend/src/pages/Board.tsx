@@ -69,7 +69,7 @@ function Board() {
             justifyContent: 'center',
           }}
         >
-          <CircularProgress size={100} color='primary' />
+          <CircularProgress size={100} color='secondary' />
         </Box>
       </div>
     );

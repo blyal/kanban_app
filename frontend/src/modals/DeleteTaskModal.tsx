@@ -50,7 +50,7 @@ function DeleteTaskModal({ taskId }: DeleteTaskModalProps) {
           <Button
             // type='submit'
             variant='contained'
-            color='primary'
+            color='warning'
             fullWidth
             onClick={handleDelete}
           >

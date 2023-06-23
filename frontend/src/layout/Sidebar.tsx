@@ -55,7 +55,10 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
               );
             })}
             <ListItem sx={{ paddingBottom: '2px' }}>
-              <Button color='secondary' onClick={handleClickAddNewBoard}>
+              <Button
+                sx={{ color: '#4caf50' }}
+                onClick={handleClickAddNewBoard}
+              >
                 <ListItemText primary='Add new board' />
               </Button>
             </ListItem>
@@ -65,6 +68,7 @@ function Sidebar({ isSidebarOpen, closeSidebar }: SidebarProps) {
                 component={Link}
                 to='/boards'
                 onClick={closeSidebar}
+                sx={{ color: '#1976d2' }}
               >
                 <ListItemText primary='See all boards' />
               </Button>
