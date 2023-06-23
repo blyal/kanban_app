@@ -15,6 +15,9 @@ function Board() {
   const [sectionIdForAddingTask, setSectionIdForAddingTask] = React.useState<
     string | null
   >(null);
+  const [taskIdForAction, setTaskIdForAction] = React.useState<string | null>(
+    null
+  );
   const {
     sections,
     isLoading: areSectionsLoading,
@@ -32,9 +35,15 @@ function Board() {
     openModal(ModalType.ADD_TASK);
   };
 
+  const handleDeleteTask = (taskId: string) => {
+    setTaskIdForAction(taskId);
+    openModal(ModalType.DELETE_TASK);
+  };
+
   React.useEffect(() => {
     if (!Boolean(typeOfModalOpen)) {
       setSectionIdForAddingTask(null);
+      setTaskIdForAction(null);
     }
   }, [typeOfModalOpen]);
 
@@ -61,7 +70,10 @@ function Board() {
   return (
     <>
       {Boolean(typeOfModalOpen) && (
-        <ModalsWrapper sectionIdForAction={sectionIdForAddingTask} />
+        <ModalsWrapper
+          sectionIdForAction={sectionIdForAddingTask}
+          taskIdForAction={taskIdForAction}
+        />
       )}
       <Box
         sx={{
@@ -87,6 +99,7 @@ function Board() {
                 section={section}
                 sectionTasks={sectionTasks}
                 handleAddTask={handleAddTask}
+                handleDeleteTask={handleDeleteTask}
               />
             );
           })}

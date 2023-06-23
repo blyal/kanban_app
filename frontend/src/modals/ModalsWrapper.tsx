@@ -4,12 +4,17 @@ import { AddBoardModal } from './AddBoardModal';
 import { AddSectionModal } from './AddSectionModal';
 import { Modal } from './Modal';
 import { AddTaskModal } from './AddTaskModal';
+import { DeleteTaskModal } from './DeleteTaskModal';
 
 interface ModalsWrapperProps {
   sectionIdForAction?: string | null;
+  taskIdForAction?: string | null;
 }
 
-function ModalsWrapper({ sectionIdForAction }: ModalsWrapperProps = {}) {
+function ModalsWrapper({
+  sectionIdForAction,
+  taskIdForAction,
+}: ModalsWrapperProps = {}) {
   const { typeOfModalOpen } = useModalContext();
   const { boardId } = useParams();
 
@@ -26,7 +31,11 @@ function ModalsWrapper({ sectionIdForAction }: ModalsWrapperProps = {}) {
   )
     return <AddTaskModal boardId={boardId} sectionId={sectionIdForAction} />;
   if (typeOfModalOpen === ModalType.UPDATE_TASK) return <></>;
-  if (typeOfModalOpen === ModalType.DELETE_TASK) return <></>;
+  if (
+    typeOfModalOpen === ModalType.DELETE_TASK &&
+    typeof taskIdForAction === 'string'
+  )
+    return <DeleteTaskModal taskId={taskIdForAction} />;
 
   return <Modal title='Error'>Something went wrong</Modal>;
 }

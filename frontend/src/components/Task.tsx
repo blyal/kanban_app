@@ -4,9 +4,10 @@ import { Task as ITask } from '../types/types';
 
 interface TaskProps {
   task: ITask;
+  handleDeleteTask: (taskId: string) => void;
 }
 
-function Task({ task }: TaskProps) {
+function Task({ task, handleDeleteTask }: TaskProps) {
   const theme = useTheme();
 
   return (
@@ -42,7 +43,7 @@ function Task({ task }: TaskProps) {
           // sx={{ ml: 1 }} // You can adjust the margin to your needs
           onClick={(event) => {
             event.stopPropagation();
-            console.log('click delete');
+            handleDeleteTask(task._id);
           }} // replace with your delete function
           sx={{
             position: 'absolute',
