@@ -31,4 +31,19 @@ function useAddTaskToSection() {
   );
 }
 
-export { useGetTasksByBoard, useAddTaskToSection };
+function useDeleteTask() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (taskId: string) =>
+      client(`${TASKS_URL}/${taskId}`, {
+        method: HttpMethod.DELETE,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tasks');
+      },
+    }
+  );
+}
+
+export { useGetTasksByBoard, useAddTaskToSection, useDeleteTask };
