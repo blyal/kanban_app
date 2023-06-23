@@ -30,10 +30,10 @@ interface Task {
   sectionId: string;
 }
 
-interface AddTaskData {
+interface ApiTaskData {
   title: string;
   boardId: string;
   sectionId: string;
 }
 
-export type { Board, AddBoardData, Section, AddSectionData, Task, AddTaskData };
+export type { Board, AddBoardData, Section, AddSectionData, Task, ApiTaskData };

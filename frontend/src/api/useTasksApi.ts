@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { HttpMethod, client } from './api-client';
-import { Task, AddTaskData } from '../types/types';
+import { Task, ApiTaskData } from '../types/types';
 
 const TASKS_URL = 'tasks';
 
@@ -18,9 +18,26 @@ function useGetTasksByBoard(boardId: string | undefined) {
 function useAddTaskToSection() {
   const queryClient = useQueryClient();
   return useMutation(
-    (data: AddTaskData) =>
+    (data: ApiTaskData) =>
       client(TASKS_URL, {
         method: HttpMethod.POST,
+        data,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tasks');
+      },
+    }
+  );
+}
+
+function usePatchTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ taskId, data }: { taskId: string; data: ApiTaskData }) =>
+      client<Task>(`${TASKS_URL}/${taskId}`, {
+        method: HttpMethod.PATCH,
         data,
       }),
     {
@@ -46,4 +63,4 @@ function useDeleteTask() {
   );
 }
 
-export { useGetTasksByBoard, useAddTaskToSection, useDeleteTask };
+export { useGetTasksByBoard, useAddTaskToSection, usePatchTask, useDeleteTask };
