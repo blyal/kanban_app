@@ -1,4 +1,4 @@
-import { Button, Typography, useTheme } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 interface AddTaskButtonProps {
   sectionId: string;
@@ -6,18 +6,16 @@ interface AddTaskButtonProps {
 }
 
 function AddTaskButton({ sectionId, handleAddTask }: AddTaskButtonProps) {
-  const theme = useTheme();
-
   return (
     <Button
       variant='outlined'
       onClick={() => handleAddTask(sectionId)}
       sx={{
-        mt: 2, // margin top
-        mb: 2, // margin bottom
+        mt: 0.5, // margin top
+        mb: 0.5, // margin bottom
         borderRadius: 2,
         width: '100%',
-        backgroundColor: theme.palette.primary.main,
+        // backgroundColor: theme.palette.primary.main,
       }}
     >
       <Typography variant='body1' color='white'>
