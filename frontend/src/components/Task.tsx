@@ -22,6 +22,7 @@ function Task({ task }: TaskProps) {
           borderRadius: 2,
           width: '100%',
           backgroundColor: theme.palette.primary.main,
+          textTransform: 'none',
         }}
       >
         <Typography variant='body1' color='white'>

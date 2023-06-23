@@ -33,6 +33,7 @@ function Section({
           padding: 3,
           paddingBottom: 0,
         }}
+        className='section'
       >
         <Typography variant='h6'>{section.title}</Typography>
         <List>

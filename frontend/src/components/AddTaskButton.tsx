@@ -15,10 +15,11 @@ function AddTaskButton({ sectionId, handleAddTask }: AddTaskButtonProps) {
         mb: 0.5, // margin bottom
         borderRadius: 2,
         width: '100%',
+        textTransform: 'none',
         // backgroundColor: theme.palette.primary.main,
       }}
     >
-      <Typography variant='body1' color='white'>
+      <Typography variant='body1' color='black'>
         + Add Task
       </Typography>
     </Button>
