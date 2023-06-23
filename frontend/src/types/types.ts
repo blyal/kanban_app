@@ -15,6 +15,7 @@ interface Section {
   title: string;
   dateCreated: string;
   boardId: string;
+  order: number;
 }
 
 interface AddSectionData {
@@ -25,6 +26,11 @@ interface AddSectionData {
 interface PatchSectionData {
   title: string;
   sectionId: string;
+}
+
+interface UpdateSectionOrderData {
+  sectionId: string;
+  newOrder: number;
 }
 
 interface Task {
@@ -47,6 +53,7 @@ export type {
   Section,
   AddSectionData,
   PatchSectionData,
+  UpdateSectionOrderData,
   Task,
   ApiTaskData,
 };

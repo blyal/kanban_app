@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { HttpMethod, client } from './api-client';
-import { Section, AddSectionData, PatchSectionData } from '../types/types';
+import {
+  Section,
+  AddSectionData,
+  PatchSectionData,
+  UpdateSectionOrderData,
+} from '../types/types';
 
 const SECTIONS_URL = 'sections';
 
@@ -12,7 +17,10 @@ function useGetSectionsByBoard(boardId: string | undefined) {
       },
     })
   );
-  return { ...result, sections: result.data?.data ?? [] };
+  return {
+    ...result,
+    sections: result.data?.data.sort((a, b) => a.order - b.order) ?? [],
+  };
 }
 
 function useAddSectionToBoard() {
@@ -62,9 +70,26 @@ function useDeleteSection() {
   );
 }
 
+function useUpdateSectionOrder() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ sectionId, newOrder }: UpdateSectionOrderData) =>
+      client(`${SECTIONS_URL}/reorder/${sectionId}`, {
+        method: HttpMethod.PATCH,
+        data: { newOrder },
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('sections');
+      },
+    }
+  );
+}
+
 export {
   useGetSectionsByBoard,
   useAddSectionToBoard,
   usePatchSection,
   useDeleteSection,
+  useUpdateSectionOrder,
 };
