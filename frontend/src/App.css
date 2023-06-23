@@ -1,10 +1,12 @@
 .app {
   height: 100vh;
   position: relative;
+  background-color: darkcyan;
 }
 
 .header-toolbar {
   position: relative;
+  height: 64px;
 }
 
 .header-burger-button {

@@ -1,9 +1,7 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useModalContext, ModalType } from '../context/modalContext';
 
 function AddSectionButton() {
-  const theme = useTheme();
-
   const { openModal } = useModalContext();
 
   return (
@@ -18,7 +16,10 @@ function AddSectionButton() {
         textAlign: 'center',
         paddingTop: 3,
         paddingBottom: 3,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        '&:hover': {
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        },
         cursor: 'pointer',
       }}
     >

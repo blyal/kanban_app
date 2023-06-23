@@ -3,7 +3,7 @@ import { Box, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetSectionsByBoard } from '../api/useSectionsApi';
 import { ErrorPage } from '../navigation/ErrorPage';
-import { Section as ISection } from '../types/types';
+import { Section as ISection, Task as ITask } from '../types/types';
 import { Section } from '../components/Section';
 import { useModalContext, ModalType } from '../context/modalContext';
 import { ModalsWrapper } from '../modals/ModalsWrapper';
@@ -65,28 +65,33 @@ function Board() {
       )}
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
+          height: 'calc(100vh - 64px)',
           overflowX: 'auto',
-          p: 1,
-          margin: 3,
-          alignItems: 'start',
         }}
       >
-        {sections.map((section: ISection) => {
-          const sectionTasks = tasks.filter(
-            (task) => task.sectionId === section._id
-          );
-          return (
-            <Section
-              key={section._id}
-              section={section}
-              sectionTasks={sectionTasks}
-              handleAddTask={handleAddTask}
-            />
-          );
-        })}
-        <AddSectionButton />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'start',
+            p: 2,
+          }}
+        >
+          {sections.map((section: ISection) => {
+            const sectionTasks: ITask[] = tasks.filter(
+              (task) => task.sectionId === section._id
+            );
+            return (
+              <Section
+                key={section._id}
+                section={section}
+                sectionTasks={sectionTasks}
+                handleAddTask={handleAddTask}
+              />
+            );
+          })}
+          <AddSectionButton />
+        </Box>
       </Box>
     </>
   );
