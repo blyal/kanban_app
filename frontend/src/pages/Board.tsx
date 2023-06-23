@@ -1,7 +1,12 @@
 import React from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Box, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useGetSectionsByBoard } from '../api/useSectionsApi';
+import {
+  useGetSectionsByBoard,
+  useUpdateSectionOrder,
+} from '../api/useSectionsApi';
 import { ErrorPage } from '../navigation/ErrorPage';
 import { Section as ISection, Task as ITask } from '../types/types';
 import { Section } from '../components/Section';
@@ -20,6 +25,11 @@ function Board() {
     isLoading: areSectionsLoading,
     isError: isGetSectionsError,
   } = useGetSectionsByBoard(boardId);
+  const {
+    mutateAsync: updateSectionOrder,
+    isLoading: isUpdatingSectionOrder,
+    isError: isUpdateSectionOrderError,
+  } = useUpdateSectionOrder();
   const {
     tasks,
     isLoading: areTasksLoading,
@@ -47,6 +57,10 @@ function Board() {
     openModal(ModalType.DELETE_TASK);
   };
 
+  const handleMoveSection = (sectionId: string, dropOrder: number) => {
+    updateSectionOrder({ sectionId, newOrder: dropOrder });
+  };
+
   React.useEffect(() => {
     if (!Boolean(typeOfModalOpen)) {
       setSectionForAction(null);
@@ -54,11 +68,11 @@ function Board() {
     }
   }, [typeOfModalOpen]);
 
-  if (isGetSectionsError || isGetTasksError) {
+  if (isGetSectionsError || isGetTasksError || isUpdateSectionOrderError) {
     return <ErrorPage />;
   }
 
-  if (areSectionsLoading || areTasksLoading)
+  if (areSectionsLoading || areTasksLoading || isUpdatingSectionOrder)
     return (
       <div>
         <Box
@@ -88,32 +102,35 @@ function Board() {
           overflowX: 'auto',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'start',
-            p: 2,
-          }}
-        >
-          {sections.map((section: ISection) => {
-            const sectionTasks: ITask[] = tasks.filter(
-              (task) => task.sectionId === section._id
-            );
-            return (
-              <Section
-                key={section._id}
-                section={section}
-                sectionTasks={sectionTasks}
-                handleClickTitle={handleClickSectionTitle}
-                handleAddTask={handleAddTask}
-                handleEditTask={handleEditTask}
-                handleDeleteTask={handleDeleteTask}
-              />
-            );
-          })}
-          <AddSectionButton />
-        </Box>
+        <DndProvider backend={HTML5Backend}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'start',
+              p: 2,
+            }}
+          >
+            {sections.map((section: ISection) => {
+              const sectionTasks: ITask[] = tasks.filter(
+                (task) => task.sectionId === section._id
+              );
+              return (
+                <Section
+                  key={section._id}
+                  section={section}
+                  sectionTasks={sectionTasks}
+                  handleClickTitle={handleClickSectionTitle}
+                  handleAddTask={handleAddTask}
+                  handleEditTask={handleEditTask}
+                  handleDeleteTask={handleDeleteTask}
+                  handleMoveSection={handleMoveSection}
+                />
+              );
+            })}
+            <AddSectionButton />
+          </Box>
+        </DndProvider>
       </Box>
     </>
   );
