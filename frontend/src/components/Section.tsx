@@ -1,6 +1,7 @@
-import { Box, Button, Paper, Typography, List, useTheme } from '@mui/material';
+import { Box, Paper, Typography, List, useTheme } from '@mui/material';
 import { Section as ISection, Task as ITask } from '../types/types';
 import { Task } from './Task';
+import { AddTaskButton } from './AddTaskButton';
 
 interface SectionProps {
   section: ISection;
@@ -30,6 +31,7 @@ function Section({
         sx={{
           backgroundColor: theme.palette.primary.light,
           padding: 3,
+          paddingBottom: 0,
         }}
       >
         <Typography variant='h6'>{section.title}</Typography>
@@ -37,17 +39,10 @@ function Section({
           {tasks.map((task) => (
             <Task key={task._id} task={task} />
           ))}
-          <Button
-            variant='outlined'
-            onClick={() => handleAddTask(section._id)}
-            sx={{
-              mt: 2, // margin top
-              mb: 2, // margin bottom
-              borderRadius: 2,
-            }}
-          >
-            <Typography variant='body1'>+ Add Task</Typography>
-          </Button>
+          <AddTaskButton
+            sectionId={section._id}
+            handleAddTask={handleAddTask}
+          />
         </List>
       </Paper>
     </Box>
