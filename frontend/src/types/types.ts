@@ -22,4 +22,18 @@ interface AddSectionData {
   boardId: string;
 }
 
-export type { Board, AddBoardData, Section, AddSectionData };
+interface Task {
+  _id: string;
+  title: string;
+  dateCreated: string;
+  boardId: string;
+  sectionId: string;
+}
+
+interface AddTaskData {
+  title: string;
+  boardId: string;
+  sectionId: string;
+}
+
+export type { Board, AddBoardData, Section, AddSectionData, Task, AddTaskData };
