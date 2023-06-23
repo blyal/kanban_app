@@ -11,7 +11,7 @@ function Section({ section }: SectionProps) {
   return (
     <Box
       sx={{
-        width: 300,
+        minWidth: 300,
         mr: 2, // margin right
         mb: 3, // margin bottom
         borderRadius: 2,

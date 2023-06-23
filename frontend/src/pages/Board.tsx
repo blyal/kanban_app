@@ -52,7 +52,7 @@ function Board() {
         <Box
           onClick={() => openModal(ModalType.ADD_SECTION)}
           sx={{
-            width: 300, // whatever fixed width
+            minWidth: 300,
             mr: 2,
             mb: 3,
             borderRadius: 2,
