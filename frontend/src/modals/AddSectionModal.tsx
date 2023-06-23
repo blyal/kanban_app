@@ -52,7 +52,7 @@ function AddSectionModal({ boardId }: AddSectionModalProps) {
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             margin='normal'
-            inputProps={{ maxLength: 12 }}
+            inputProps={{ maxLength: 18 }}
           />
           <Button type='submit' variant='contained' color='primary' fullWidth>
             Create
