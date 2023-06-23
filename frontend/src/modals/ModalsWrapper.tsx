@@ -8,6 +8,7 @@ import { AddTaskModal } from './AddTaskModal';
 import { DeleteTaskModal } from './DeleteTaskModal';
 import { UpdateTaskModal } from './UpdateTaskModal';
 import { Section, Task } from '../types/types';
+import { UpdateOrDeleteBoardModal } from './UpdateOrDeleteBoardModal';
 
 interface ModalsWrapperProps {
   sectionForAction?: Section | null;
@@ -22,7 +23,11 @@ function ModalsWrapper({
   const { boardId } = useParams();
 
   if (typeOfModalOpen === ModalType.ADD_BOARD) return <AddBoardModal />;
-  if (typeOfModalOpen === ModalType.DELETE_BOARD) return <></>;
+  if (
+    typeOfModalOpen === ModalType.UPDATE_OR_DELETE_BOARD &&
+    boardId !== undefined
+  )
+    return <UpdateOrDeleteBoardModal boardId={boardId} />;
   if (typeOfModalOpen === ModalType.ADD_SECTION && boardId !== undefined)
     return <AddSectionModal boardId={boardId} />;
   if (
