@@ -32,6 +32,12 @@ function Board() {
     openModal(ModalType.ADD_TASK);
   };
 
+  React.useEffect(() => {
+    if (!Boolean(typeOfModalOpen)) {
+      setSectionIdForAddingTask(null);
+    }
+  }, [typeOfModalOpen]);
+
   if (isGetSectionsError || isGetTasksError) {
     return <ErrorPage />;
   }
