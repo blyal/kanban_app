@@ -6,10 +6,10 @@ import { Modal } from './Modal';
 import { AddTaskModal } from './AddTaskModal';
 
 interface ModalsWrapperProps {
-  sectionIdForAction: string | null | undefined;
+  sectionIdForAction?: string | null;
 }
 
-function ModalsWrapper({ sectionIdForAction = null }: ModalsWrapperProps) {
+function ModalsWrapper({ sectionIdForAction }: ModalsWrapperProps = {}) {
   const { typeOfModalOpen } = useModalContext();
   const { boardId } = useParams();
 
@@ -22,7 +22,7 @@ function ModalsWrapper({ sectionIdForAction = null }: ModalsWrapperProps) {
   if (
     typeOfModalOpen === ModalType.ADD_TASK &&
     boardId !== undefined &&
-    sectionIdForAction !== null
+    typeof sectionIdForAction === 'string'
   )
     return <AddTaskModal boardId={boardId} sectionId={sectionIdForAction} />;
   if (typeOfModalOpen === ModalType.UPDATE_TASK) return <></>;
