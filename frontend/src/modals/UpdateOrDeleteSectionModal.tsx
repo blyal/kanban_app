@@ -53,7 +53,9 @@ function UpdateOrDeleteSectionModal({
   }, [closeModal, isUpdateSectionSuccess, isDeleteSectionSuccess]);
 
   return (
-    <Modal title='Edit Section'>
+    <Modal
+      title={isConsideringSectionDeletion ? 'Delete Section' : 'Update Section'}
+    >
       {isUpdatingSection || isDeletingSection ? (
         <Box
           sx={{

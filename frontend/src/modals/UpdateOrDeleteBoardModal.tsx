@@ -1,3 +1,5 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
@@ -5,7 +7,6 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import React from 'react';
 import { usePatchBoard, useDeleteBoard } from '../api/useBoardsApi';
 import { useModalContext } from '../context/modalContext';
 import { Modal } from './Modal';
@@ -67,14 +68,17 @@ function UpdateOrDeleteBoardModal({ boardId }: UpdateOrDeleteBoardModalProps) {
     deleteBoard(boardId);
   };
 
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     if (isUpdateBoardSuccess || isDeleteBoardSuccess) {
       closeModal();
+      navigate('/boards');
     }
-  }, [closeModal, isUpdateBoardSuccess, isDeleteBoardSuccess]);
+  }, [closeModal, isUpdateBoardSuccess, isDeleteBoardSuccess, navigate]);
 
   return (
-    <Modal title='Edit Board'>
+    <Modal title={isConsideringBoardDeletion ? 'Delete Board' : 'Update Board'}>
       {isComponentLoading || isUpdatingBoard || isDeletingBoard ? (
         <Box
           sx={{
