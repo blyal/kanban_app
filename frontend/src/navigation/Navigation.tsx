@@ -8,17 +8,12 @@ import { Layout } from '../layout/Layout';
 import { Boards } from '../pages/Boards';
 import { Board } from '../pages/Board';
 import { NotFoundPage } from './NotFoundPage';
-import { ModalsWrapper } from '../modals/ModalsWrapper';
-import { useModalContext } from '../context/modalContext';
 
 function Navigation() {
-  const { typeOfModalOpen } = useModalContext();
-
   return (
     <>
       <Router>
         <Layout />
-        {Boolean(typeOfModalOpen) && <ModalsWrapper />}
         <Routes>
           <Route path='/' element={<Navigate to='/boards' />} />
           <Route path='/boards' element={<Boards />} />
