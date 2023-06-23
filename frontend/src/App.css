@@ -4,6 +4,8 @@
   background-color: darkcyan;
 }
 
+/* --- HEADER CSS --- */
+
 .header-toolbar {
   position: relative;
   height: 64px;
@@ -20,6 +22,8 @@
   transform: translateX(-50%);
 }
 
+/* --- PAGE CSS --- */
+
 .not-found-page {
   position: absolute;
   top: 0;
@@ -32,8 +36,10 @@
   flex-direction: column;
 }
 
-.center {
-  text-align: center;
+/* --- COMPONENT CSS --- */
+
+.section {
+  padding: 18px;
 }
 
 /* --- MODAL CSS --- */
@@ -82,4 +88,10 @@
 
 .modal-body {
   padding: 16px;
+}
+
+/* --- UTILITY CSS --- */
+
+.center {
+  text-align: center;
 }
