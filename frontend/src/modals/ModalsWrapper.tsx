@@ -3,8 +3,13 @@ import { useModalContext, ModalType } from '../context/modalContext';
 import { AddBoardModal } from './AddBoardModal';
 import { AddSectionModal } from './AddSectionModal';
 import { Modal } from './Modal';
+import { AddTaskModal } from './AddTaskModal';
 
-function ModalsWrapper() {
+interface ModalsWrapperProps {
+  sectionIdForAction: string | null | undefined;
+}
+
+function ModalsWrapper({ sectionIdForAction = null }: ModalsWrapperProps) {
   const { typeOfModalOpen } = useModalContext();
   const { boardId } = useParams();
 
@@ -14,7 +19,12 @@ function ModalsWrapper() {
     return <AddSectionModal boardId={boardId} />;
   if (typeOfModalOpen === ModalType.UPDATE_SECTION) return <></>;
   if (typeOfModalOpen === ModalType.DELETE_SECTION) return <></>;
-  if (typeOfModalOpen === ModalType.ADD_TASK) return <></>;
+  if (
+    typeOfModalOpen === ModalType.ADD_TASK &&
+    boardId !== undefined &&
+    sectionIdForAction !== null
+  )
+    return <AddTaskModal boardId={boardId} sectionId={sectionIdForAction} />;
   if (typeOfModalOpen === ModalType.UPDATE_TASK) return <></>;
   if (typeOfModalOpen === ModalType.DELETE_TASK) return <></>;
 

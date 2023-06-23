@@ -1,16 +1,20 @@
+import React from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetSectionsByBoard } from '../api/useSectionsApi';
 import { ErrorPage } from '../navigation/ErrorPage';
 import { Section as ISection } from '../types/types';
 import { Section } from '../components/Section';
-import { useModalContext } from '../context/modalContext';
+import { useModalContext, ModalType } from '../context/modalContext';
 import { ModalsWrapper } from '../modals/ModalsWrapper';
 import { AddSectionButton } from '../components/AddSectionButton';
 import { useGetTasksByBoard } from '../api/useTasksApi';
 
 function Board() {
   const { boardId } = useParams();
+  const [sectionIdForAddingTask, setSectionIdForAddingTask] = React.useState<
+    string | null
+  >(null);
   const {
     sections,
     isLoading: areSectionsLoading,
@@ -21,7 +25,12 @@ function Board() {
     isLoading: areTasksLoading,
     isError: isGetTasksError,
   } = useGetTasksByBoard(boardId);
-  const { typeOfModalOpen } = useModalContext();
+  const { typeOfModalOpen, openModal } = useModalContext();
+
+  const handleAddTask = (sectionId: string) => {
+    setSectionIdForAddingTask(sectionId);
+    openModal(ModalType.ADD_TASK);
+  };
 
   if (isGetSectionsError || isGetTasksError) {
     return <ErrorPage />;
@@ -45,7 +54,9 @@ function Board() {
 
   return (
     <>
-      {Boolean(typeOfModalOpen) && <ModalsWrapper />}
+      {Boolean(typeOfModalOpen) && (
+        <ModalsWrapper sectionIdForAction={sectionIdForAddingTask} />
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -65,6 +76,7 @@ function Board() {
               key={section._id}
               section={section}
               sectionTasks={sectionTasks}
+              handleAddTask={handleAddTask}
             />
           );
         })}

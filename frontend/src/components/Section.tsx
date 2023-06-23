@@ -1,16 +1,19 @@
 import { Box, Button, Paper, Typography, List, useTheme } from '@mui/material';
 import { Section as ISection, Task as ITask } from '../types/types';
-import { useModalContext, ModalType } from '../context/modalContext';
 import { Task } from './Task';
 
 interface SectionProps {
   section: ISection;
   sectionTasks: ITask[];
+  handleAddTask: (sectionId: string) => void;
 }
 
-function Section({ section, sectionTasks: tasks }: SectionProps) {
+function Section({
+  section,
+  sectionTasks: tasks,
+  handleAddTask,
+}: SectionProps) {
   const theme = useTheme();
-  const { openModal } = useModalContext();
 
   return (
     <Box
@@ -36,7 +39,7 @@ function Section({ section, sectionTasks: tasks }: SectionProps) {
           ))}
           <Button
             variant='outlined'
-            onClick={() => openModal(ModalType.ADD_TASK)}
+            onClick={() => handleAddTask(section._id)}
             sx={{
               mt: 2, // margin top
               mb: 2, // margin bottom
