@@ -39,12 +39,19 @@ interface Task {
   dateCreated: string;
   boardId: string;
   sectionId: string;
+  order: number;
 }
 
 interface ApiTaskData {
   title: string;
   boardId: string;
   sectionId: string;
+}
+
+interface MoveTaskData {
+  taskId: string;
+  newSectionId: string;
+  newOrder: number;
 }
 
 export type {
@@ -56,4 +63,5 @@ export type {
   UpdateSectionOrderData,
   Task,
   ApiTaskData,
+  MoveTaskData,
 };

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { HttpMethod, client } from './api-client';
-import { Task, ApiTaskData } from '../types/types';
+import { Task, ApiTaskData, MoveTaskData } from '../types/types';
 
 const TASKS_URL = 'tasks';
 
@@ -12,7 +12,10 @@ function useGetTasksByBoard(boardId: string | undefined) {
       },
     })
   );
-  return { ...result, tasks: result.data?.data ?? [] };
+  return {
+    ...result,
+    tasks: result.data?.data.sort((a, b) => a.order - b.order) ?? [],
+  };
 }
 
 function useAddTaskToSection() {
@@ -63,4 +66,27 @@ function useDeleteTask() {
   );
 }
 
-export { useGetTasksByBoard, useAddTaskToSection, usePatchTask, useDeleteTask };
+function useMoveTask() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ taskId, newSectionId, newOrder }: MoveTaskData) =>
+      client(`${TASKS_URL}/move/${taskId}`, {
+        method: HttpMethod.PATCH,
+        data: { newSectionId, newOrder },
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('sections');
+        queryClient.invalidateQueries('tasks');
+      },
+    }
+  );
+}
+
+export {
+  useGetTasksByBoard,
+  useAddTaskToSection,
+  usePatchTask,
+  useDeleteTask,
+  useMoveTask,
+};
