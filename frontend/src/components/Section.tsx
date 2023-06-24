@@ -12,6 +12,11 @@ interface SectionProps {
   handleEditTask: (task: ITask) => void;
   handleDeleteTask: (task: ITask) => void;
   handleMoveSection: (sectionId: string, dropOrder: number) => void;
+  handleMoveTask: (
+    taskId: string,
+    dropOrder: number,
+    sectionId: string
+  ) => void;
 }
 
 interface DraggedSection {
@@ -26,6 +31,7 @@ function Section({
   handleEditTask,
   handleDeleteTask,
   handleMoveSection,
+  handleMoveTask,
 }: SectionProps) {
   const theme = useTheme();
 
@@ -77,6 +83,7 @@ function Section({
                 task={task}
                 handleEditTask={handleEditTask}
                 handleDeleteTask={handleDeleteTask}
+                handleMoveTask={handleMoveTask}
               />
             ))}
             <AddTaskButton section={section} handleAddTask={handleAddTask} />

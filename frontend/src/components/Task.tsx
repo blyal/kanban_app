@@ -7,13 +7,23 @@ interface TaskProps {
   task: ITask;
   handleEditTask: (task: ITask) => void;
   handleDeleteTask: (task: ITask) => void;
+  handleMoveTask: (
+    taskId: string,
+    dropOrder: number,
+    newSectionId: string
+  ) => void;
 }
 
 interface DraggedTask {
   _id: string;
 }
 
-function Task({ task, handleEditTask, handleDeleteTask }: TaskProps) {
+function Task({
+  task,
+  handleEditTask,
+  handleDeleteTask,
+  handleMoveTask,
+}: TaskProps) {
   const theme = useTheme();
 
   const [, drag] = useDrag({
@@ -30,7 +40,7 @@ function Task({ task, handleEditTask, handleDeleteTask }: TaskProps) {
     drop: (item: DraggedTask) => {
       if (item._id !== task._id) {
         console.log('drop');
-        // handleMoveTask(item._id, task._id);
+        handleMoveTask(item._id, task.order, task.sectionId);
       }
     },
   });

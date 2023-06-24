@@ -13,7 +13,7 @@ import { Section } from '../components/Section';
 import { useModalContext, ModalType } from '../context/modalContext';
 import { ModalsWrapper } from '../modals/ModalsWrapper';
 import { AddSectionButton } from '../components/AddSectionButton';
-import { useGetTasksByBoard } from '../api/useTasksApi';
+import { useGetTasksByBoard, useMoveTask } from '../api/useTasksApi';
 
 function Board() {
   const { boardId } = useParams();
@@ -35,6 +35,7 @@ function Board() {
     isLoading: areTasksLoading,
     isError: isGetTasksError,
   } = useGetTasksByBoard(boardId);
+  const { mutateAsync: moveTask } = useMoveTask();
   const { typeOfModalOpen, openModal } = useModalContext();
 
   const handleClickSectionTitle = (section: ISection) => {
@@ -59,6 +60,14 @@ function Board() {
 
   const handleMoveSection = (sectionId: string, dropOrder: number) => {
     updateSectionOrder({ sectionId, newOrder: dropOrder });
+  };
+
+  const handleMoveTask = (
+    taskId: string,
+    dropOrder: number,
+    sectionId: string
+  ) => {
+    moveTask({ taskId, newOrder: dropOrder, newSectionId: sectionId });
   };
 
   React.useEffect(() => {
@@ -125,6 +134,7 @@ function Board() {
                   handleEditTask={handleEditTask}
                   handleDeleteTask={handleDeleteTask}
                   handleMoveSection={handleMoveSection}
+                  handleMoveTask={handleMoveTask}
                 />
               );
             })}

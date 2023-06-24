@@ -69,10 +69,10 @@ function useDeleteTask() {
 function useMoveTask() {
   const queryClient = useQueryClient();
   return useMutation(
-    ({ taskId, newSectionId, newOrder }: MoveTaskData) =>
+    ({ taskId, newOrder, newSectionId }: MoveTaskData) =>
       client(`${TASKS_URL}/move/${taskId}`, {
         method: HttpMethod.PATCH,
-        data: { newSectionId, newOrder },
+        data: { newOrder, newSectionId },
       }),
     {
       onSuccess: () => {
