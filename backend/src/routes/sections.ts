@@ -8,7 +8,6 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { boardId } = req.query;
-    console.log(boardId);
     const sectionsByBoard = await Section.find({ boardId });
     res.send(sectionsByBoard);
   } catch (err: any) {

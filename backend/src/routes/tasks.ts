@@ -7,7 +7,6 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const { boardId } = req.query;
-    console.log(boardId);
     const tasksByBoard = await Task.find({ boardId });
     res.send(tasksByBoard);
   } catch (err: any) {

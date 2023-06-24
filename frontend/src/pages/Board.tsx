@@ -35,7 +35,11 @@ function Board() {
     isLoading: areTasksLoading,
     isError: isGetTasksError,
   } = useGetTasksByBoard(boardId);
-  const { mutateAsync: moveTask } = useMoveTask();
+  const {
+    mutateAsync: moveTask,
+    isLoading: isLoadingMoveTask,
+    isError: isErrorMoveTask,
+  } = useMoveTask();
   const { typeOfModalOpen, openModal } = useModalContext();
 
   const handleClickSectionTitle = (section: ISection) => {
@@ -77,11 +81,21 @@ function Board() {
     }
   }, [typeOfModalOpen]);
 
-  if (isGetSectionsError || isGetTasksError || isUpdateSectionOrderError) {
+  if (
+    isGetSectionsError ||
+    isGetTasksError ||
+    isUpdateSectionOrderError ||
+    isErrorMoveTask
+  ) {
     return <ErrorPage />;
   }
 
-  if (areSectionsLoading || areTasksLoading || isUpdatingSectionOrder)
+  if (
+    areSectionsLoading ||
+    areTasksLoading ||
+    isUpdatingSectionOrder ||
+    isLoadingMoveTask
+  )
     return (
       <div>
         <Box

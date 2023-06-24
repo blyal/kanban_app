@@ -39,7 +39,6 @@ function Task({
     accept: 'task',
     drop: (item: DraggedTask) => {
       if (item._id !== task._id) {
-        console.log('drop');
         handleMoveTask(item._id, task.order, task.sectionId);
       }
     },
