@@ -36,23 +36,25 @@ function Section({
 
   const [, drop] = useDrop(() => ({
     accept: 'section',
-    drop: (item: any) => {
-      handleMoveSection((item as DraggedSection)._id, section.order);
+    drop: (item: DraggedSection) => {
+      if (item._id !== section._id) {
+        handleMoveSection(item._id, section.order);
+      }
     },
   }));
 
   return (
-    <div ref={(el) => drag(drop(el))}>
-      <Box
-        sx={{
-          minWidth: 300,
-          mr: 2, // margin right
-          mb: 3, // margin bottom
-          borderRadius: 2,
-          boxShadow: 1,
-          textAlign: 'center',
-        }}
-      >
+    <Box
+      sx={{
+        minWidth: 300,
+        mr: 2, // margin right
+        mb: 3, // margin bottom
+        borderRadius: 2,
+        boxShadow: 1,
+        textAlign: 'center',
+      }}
+    >
+      <div ref={(el) => drag(drop(el))}>
         <Paper
           sx={{
             backgroundColor: theme.palette.secondary.light,
@@ -80,8 +82,8 @@ function Section({
             <AddTaskButton section={section} handleAddTask={handleAddTask} />
           </List>
         </Paper>
-      </Box>
-    </div>
+      </div>
+    </Box>
   );
 }
 
