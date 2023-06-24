@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useGetBoards } from '../api/useBoardsApi';
+import { useGetBoards, useAddBoard } from '../api/useBoardsApi';
 import { Board } from '../types/types';
 
 interface BoardsContextApi {
@@ -17,7 +17,14 @@ interface BoardsProviderProps {
 }
 
 function BoardsProvider({ children }: BoardsProviderProps) {
-  const { boards, isLoading } = useGetBoards();
+  const { boards, isLoading, isSuccess } = useGetBoards();
+  const { mutateAsync: addBoard } = useAddBoard();
+
+  React.useEffect(() => {
+    if (isSuccess && boards.length < 1) {
+      addBoard({ title: 'Board', description: 'Default Board' });
+    }
+  }, [boards, isSuccess, addBoard]);
 
   const value: BoardsContextApi = {
     boards,
