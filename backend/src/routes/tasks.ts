@@ -76,4 +76,43 @@ router.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.patch('/move/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { newOrder, newSectionId } = req.body;
+
+    const taskToMove = await Task.findById(id);
+    if (!taskToMove) {
+      return res.status(404).send({ message: 'Task not found' });
+    }
+
+    const oldSectionId = taskToMove.sectionId;
+    const oldOrder = taskToMove.order;
+
+    // Update order in old section
+    await Task.updateMany(
+      { sectionId: oldSectionId, order: { $gt: oldOrder } },
+      { $inc: { order: -1 } }
+    );
+
+    // Update order in new section
+    await Task.updateMany(
+      { sectionId: newSectionId, order: { $gte: newOrder } },
+      { $inc: { order: 1 } }
+    );
+
+    // Update task's sectionId and order
+    taskToMove.sectionId = newSectionId;
+    taskToMove.order = newOrder;
+    await taskToMove.save();
+
+    res.send({ message: 'Task moved successfully' });
+  } catch (err: any) {
+    console.error(err);
+    res
+      .status(500)
+      .send({ message: 'Something went wrong with moving the task' });
+  }
+});
+
 export { router };
