@@ -6,6 +6,7 @@ export interface ITask extends Document {
   dateCreated: Date;
   boardId: string;
   sectionId: string;
+  order: number;
 }
 
 const TaskSchema: Schema = new Schema({
@@ -14,6 +15,7 @@ const TaskSchema: Schema = new Schema({
   dateCreated: { type: String, required: true },
   boardId: { type: String, required: true },
   sectionId: { type: String, required: true },
+  order: { type: Number, required: true },
 });
 
 export default mongoose.model<ITask>('Task', TaskSchema);

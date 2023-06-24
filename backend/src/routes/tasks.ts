@@ -18,6 +18,10 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   const taskData: ITask = req.body;
+  const { sectionId } = taskData;
+
+  const existingTasksCount = await Task.countDocuments({ sectionId });
+  taskData.order = existingTasksCount;
 
   taskData._id = uuid();
   taskData.dateCreated = new Date();
