@@ -74,3 +74,21 @@ npm run start
 ```
 
 Now, the application should be running! Navigate to `http://localhost:3000` in your web browser to see the application in action.
+
+## Running both servers simultaneously
+
+If you want to run both the backend and frontend servers concurrently, you can use the script set up in the root directory:
+
+1. Navigate to the root directory:
+
+```shell
+cd ..
+```
+
+2. Run the start script
+
+```shell
+npm run start
+```
+
+This will start both the backend and frontend servers simultaneously. Navigate to `http://localhost:3000` in your web browser to see the application in action.
