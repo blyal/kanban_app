@@ -3,6 +3,7 @@ import { Box, Paper, Typography, List, useTheme } from '@mui/material';
 import { Section as ISection, Task as ITask } from '../types/types';
 import { Task } from './Task';
 import { AddTaskButton } from './AddTaskButton';
+import { EmptyTasksComponent } from './EmptyTasksComponent';
 
 interface SectionProps {
   section: ISection;
@@ -77,15 +78,23 @@ function Section({
             {section.title}
           </Typography>
           <List>
-            {tasks.map((task) => (
-              <Task
-                key={task._id}
-                task={task}
-                handleEditTask={handleEditTask}
-                handleDeleteTask={handleDeleteTask}
-                handleMoveTask={handleMoveTask}
+            {tasks.length < 1 ? (
+              <EmptyTasksComponent
+                sectionId={section._id}
+                handleDropTask={handleMoveTask}
               />
-            ))}
+            ) : (
+              tasks.map((task) => (
+                <Task
+                  key={task._id}
+                  task={task}
+                  handleEditTask={handleEditTask}
+                  handleDeleteTask={handleDeleteTask}
+                  handleMoveTask={handleMoveTask}
+                />
+              ))
+            )}
+
             <AddTaskButton section={section} handleAddTask={handleAddTask} />
           </List>
         </Paper>
