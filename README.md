@@ -38,7 +38,7 @@ npm install
 3. Create a .env file in the root of the backend directory. This file should include the following environment variables:
 
 ```shell
-DATABASE_URL=<Your MongoDB connection string>
+MONGODB_URI=<Your MongoDB connection string>
 ```
 
 4. Start the backend server
